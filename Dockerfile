@@ -63,10 +63,17 @@ ENV PATH="${PATH}:/root/.bun/bin"
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="${PATH}:/root/.cargo/bin"
 
-# Install Go
-RUN wget https://go.dev/dl/go1.23.5.linux-arm64.tar.gz && \
-    rm -rf /usr/local/go && tar -C /usr/local -xzf go1.23.5.linux-arm64.tar.gz && \
-    rm go1.23.5.linux-arm64.tar.gz
+# Install Go (multi-arch)
+RUN if [ "$(uname -m)" = "aarch64" ]; then \
+      GOARCH=arm64; \
+    elif [ "$(uname -m)" = "x86_64" ]; then \
+      GOARCH=amd64; \
+    else \
+      GOARCH=$(uname -m); \
+    fi && \
+    wget https://go.dev/dl/go1.23.5.linux-${GOARCH}.tar.gz && \
+    rm -rf /usr/local/go && tar -C /usr/local -xzf go1.23.5.linux-${GOARCH}.tar.gz && \
+    rm go1.23.5.linux-${GOARCH}.tar.gz
 ENV PATH="${PATH}:/usr/local/go/bin"
 
 # Install Rust
