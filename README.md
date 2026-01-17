@@ -76,25 +76,6 @@ The `workspace` directory will be created on your host machine automatically on 
 
 ### Docker Compose Example
 
-Create `docker-compose.yml`:
-
-```yaml
-version: '3.8'
-
-services:
-  opencode:
-    image: opencode-webui-workspace:latest
-    ports:
-      - "4096:4096"
-    environment:
-      OPENCODE_SERVER_PASSWORD: ${OPENCODE_SERVER_PASSWORD:-change-me}
-      OPENCODE_PORT: 4096
-      OPENCODE_HOSTNAME: 0.0.0.0
-    volumes:
-      - ./workspace:/home/opencode/workspace
-    restart: unless-stopped
-```
-
 Run with:
 ```bash
 docker-compose up -d
