@@ -49,12 +49,16 @@ docker run -p 4096:4096 --env-file .env opencode-webui-workspace:latest
 Create a `.env` file (copy from `.env.example`):
 
 ```env
+OPENCODE_SERVER_USERNAME=opencode
 OPENCODE_SERVER_PASSWORD=your-secure-password-here
 OPENCODE_PORT=4096
 OPENCODE_HOSTNAME=0.0.0.0
 ```
 
-The password will secure your OpenCode instance. Without setting `OPENCODE_SERVER_PASSWORD`, the server runs unsecured.
+- **OPENCODE_SERVER_USERNAME**: Default login username (default: `opencode`)
+- **OPENCODE_SERVER_PASSWORD**: Secure password for the server (required for authentication)
+- **OPENCODE_PORT**: Port to listen on (default: 4096)
+- **OPENCODE_HOSTNAME**: Hostname/IP to bind to (default: 0.0.0.0)
 
 ## Volume Mounting
 
