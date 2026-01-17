@@ -58,37 +58,15 @@ The password will secure your OpenCode instance. Without setting `OPENCODE_SERVE
 
 ## Volume Mounting
 
-Mount your local directories to persist data and work with projects:
-
-### Mount Workspace Directory
-
-```bash
-docker run -p 4096:4096 \
-  -v $(pwd)/projects:/home/opencode/workspace/projects \
-  opencode-webui-workspace:latest
-```
-
-### Mount Multiple Directories
-
-Create your local directories first, then mount them:
-
-```bash
-mkdir -p projects data logs
-
-docker run -p 4096:4096 \
-  -v $(pwd)/projects:/home/opencode/workspace/projects \
-  -v $(pwd)/data:/home/opencode/workspace/data \
-  -v $(pwd)/logs:/home/opencode/workspace/logs \
-  opencode-webui-workspace:latest
-```
-
-### Full Workspace Mount
+Mount the workspace directory to persist your projects and data:
 
 ```bash
 docker run -p 4096:4096 \
   -v $(pwd)/workspace:/home/opencode/workspace \
   opencode-webui-workspace:latest
 ```
+
+The `workspace` directory will be created on your host machine automatically on first run. Inside the container, all your work is stored in `/home/opencode/workspace`.
 
 ### Docker Compose Example
 
@@ -151,18 +129,20 @@ docker run -it --rm opencode-webui-workspace:latest python -c "print('Hello from
 ### Development Workflow
 
 ```bash
-# Mount your project and run
+# Mount workspace and run interactive shell
 docker run -it --rm \
-  -v $(pwd):/home/opencode/workspace/projects/myproject \
+  -v $(pwd)/workspace:/home/opencode/workspace \
   opencode-webui-workspace:latest bash
 
-# Inside container, your tools are available:
+# Inside container, all your tools are available:
 python --version      # Python 3.13.11
 node --version        # v24.13.0
 bun --version         # 1.3.6
 go version            # go1.23.5
 rustc --version       # 1.92.0
 uv --version          # 0.9.26
+rclone version        # Cloud storage sync
+wormhole              # Secure file transfer
 ```
 
 ## User & Permissions
