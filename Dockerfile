@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y \
     htop \
     tmux \
     openssh-client \
+    rclone \
+    magic-wormhole \
     && rm -rf /var/lib/apt/lists/*
 
 # Add deadsnakes PPA for Python 3.13
@@ -85,7 +87,8 @@ RUN echo "=== Python ===" && python3 --version && \
     echo "=== Go ===" && go version && \
     echo "=== Rust ===" && rustc --version && \
     echo "=== Cargo ===" && cargo --version && \
-    echo "=== OpenCode ===" && opencode --version || echo "OpenCode installed"
+    echo "=== OpenCode ===" && opencode --version && \
+    echo "=== Rclone ===" && rclone version
 
 # Set proper permissions for workspace
 RUN chown -R opencode:opencode /home/opencode/workspace
